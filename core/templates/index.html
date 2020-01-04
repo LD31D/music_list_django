@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+	
+{% block content %}	
+	
+	{% if music %}
+		{% for track in music %}
+			<div class="col-md-4">
+				<div class="block">
+					<div class="card text-white bg-dark mx-md-3 mb-2" style="max-width: 18rem;">
+
+						<div class="card-header">{{ track.autor }}</div>
+
+						<div class="card-body">
+
+							<h5 class="card-title">{{ track.name }}</h5>
+							<p class="card-text">{{ track.length }}</p>
+													
+							<form method="post" action="/music/delete-music/">
+								
+								{% csrf_token %}
+
+								<div class="text-center">
+									<input type="hidden" name="track_id" value="{{ track.id }}">
+									<input type="submit" class="btn btn-outline-danger" value="Delete">
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+{% endblock %}
+
+{% block error %}
+	{% if error %}
+		<h5 class="card-title"><div class="alert alert-danger" role="alert">Error</div></h5>
+	{% endif %}
+{% endblock %}
